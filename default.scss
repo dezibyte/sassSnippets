@@ -1,1 +1,53 @@
+// This here is my fancy SASS snippets collection.
+// Leave me a 🌟 if it helps you and you like it 😄
 
+
+// define font-size and line-height as px but render them as percent and decimal.
+// -------------------------------------------------------------------------------------
+$setsize:16;
+
+@function percSize($size:null) {
+    $size: ($size / $setsize * 100);
+    @return $size;
+}
+
+@function percHeight($size:null, $height:null) {
+    $height: (percSize($height) / $size);
+    @return $height;
+}
+
+@mixin webfont($style:null, $color:null, $size:null, $align:null, $height:null) {
+
+    @if $style=="light" {
+        font-family: fancyPants_light, sans-serif;
+    }
+
+    @else if $style=="medium" {
+        font-family: fancyPants_medium, sans-serif;
+    }
+
+    color: $color;
+
+    @if $size==0 {
+        font-size: 100%;
+    }
+
+    @if $height==0 {
+        line-height: 1;
+    }
+
+    @if $size !=0 and $height !=0 and $size !=null {
+
+        font-size: percSize($size)+'%';
+
+        @if $height !=null {
+
+            line-height: percHeight(percSize($size), $height);
+        }
+    }
+
+    text-align: $align;
+
+}
+
+// -------------------------------------------------------------------------------------
