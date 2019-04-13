@@ -38,7 +38,7 @@ $setsize:16;
 
     @if $size !=0 and $height !=0 and $size !=null {
 
-        font-size: percSize($size)+'%';
+        font-size: unquote(percSize($size)+'%');
 
         @if $height !=null {
 
