@@ -46,7 +46,6 @@ $setsize:16;
     }
 
     @if $size !=0 and $height !=0 and $size !=null {
-
         font-size: unquote(emSize($size)+'em'+$important);
 
         @if $height !=null {
