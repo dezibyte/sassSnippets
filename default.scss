@@ -2,52 +2,79 @@
 // Leave me a 🌟 if it helps you and you like it 😄
 
 
-// define font-size and line-height as px but render them as percent and decimal.
+// define font settings using one include to keep everything together.
 // -------------------------------------------------------------------------------------
 $setsize:16;
 
-@function percSize($size:null) {
-    $size: ($size / $setsize * 100);
+@function emSize($size:null) {
+    $size: ($size / $setsize);
     @return $size;
 }
 
-@function percHeight($size:null, $height:null) {
-    $height: (percSize($height) / $size);
+@function emHeight($size:null, $height:null) {
+    $height: (emSize($height) / $size);
     @return $height;
 }
 
-@mixin webfont($style:null, $color:null, $size:null, $align:null, $height:null) {
+@mixin webfont($important:null, $style:null, $color:null, $size:null, $align:null, $height:null, $space:null, $case:null) {
+    @if ($important !=null) {
+        $important: ' !important';
+    }
+
+    @else {
+        $important: '';
+    }
 
     @if $style=="light" {
-        font-family: fancyPants_light, sans-serif;
+        font-family: fancyPants_light, sans-serif+$important;
     }
 
     @else if $style=="medium" {
-        font-family: fancyPants_medium, sans-serif;
+        font-family: fancyPants_medium, sans-serif+$important;
     }
 
-    color: $color;
+    @if($color !=null) {
+        color: unquote($color+$important);
+    }
 
     @if $size==0 {
-        font-size: 100%;
+        font-size: 1em+$important;
     }
 
     @if $height==0 {
-        line-height: 1;
+        line-height: 1em+$important;
     }
 
     @if $size !=0 and $height !=0 and $size !=null {
 
-        font-size: unquote(percSize($size)+'%');
+        font-size: unquote(emSize($size)+'em'+$important);
 
         @if $height !=null {
-
-            line-height: percHeight(percSize($size), $height);
+            line-height: unquote(emHeight(emSize($size), $height)+'em'+$important);
         }
     }
 
-    text-align: $align;
+    @if($align !=null) {
+        text-align: $align+$important;
+    }
 
+    @if($space !=null) {
+        letter-spacing: unquote(emSize($space * 0.2)+'em'+$important);
+    }
+
+    @if($case !=null) {
+        @if($case=="upper") {
+            text-transform: uppercase+$important;
+        }
+
+        @else if($case=="lower") {
+            text-transform: lowercase+$important;
+        }
+
+        @else if($case=="cap") {
+            text-transform: capitalize+$important;
+        }
+    }
 }
 
 // -------------------------------------------------------------------------------------
